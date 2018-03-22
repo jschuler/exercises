@@ -1,91 +1,79 @@
-// import { Component } from '@angular/core';
-// import { Router, Routes, ActivatedRoute, convertToParamMap } from '@angular/router';
-// import { By } from '@angular/platform-browser';
-// import { Location, CommonModule } from '@angular/common';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { TestBed, inject, async, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { Router, Routes, ActivatedRoute, convertToParamMap } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { Location, CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, inject, async, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 
-// import { Observable } from 'rxjs/Observable';
-// import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
-// import { UserComponent } from './user.component';
-// import { UserService } from '../user.service';
-// import { User } from '../user';
+import { UserComponent } from './user.component';
+import { UserService } from '../user.service';
+import { User } from '../user';
 
-// class MockUserService {
-//   users = [{
-//     id: 42,
-//     name: 'Test User',
-//     username: 'test',
-//     email: 'test@email',
-//     website: 'test web',
-//     phone: '123-456'
-//   }];
+class MockUserService {
+  users = [{
+    id: 42,
+    name: 'Test User',
+    username: 'test',
+    email: 'test@email',
+    website: 'test web',
+    phone: '123-456'
+  }];
 
-//   getUsers(): Observable<User[]> {
-//     return of(this.users);
-//   }
-// }
+  getUsers(): Observable<User[]> {
+    return of(this.users);
+  }
+}
 
-// class MockActivatedRoute {
-//   snapshot = {
-//     paramMap: {
-//       get: function() {
-//         return 42;
-//       }
-//     }
-//   };
-// }
+class MockActivatedRoute {
+  snapshot = {
+    paramMap: {
+      get: function() {
+        return 42;
+      }
+    }
+  };
+}
 
-// describe('UserComponent', () => {
-//   let component: UserComponent;
-//   let fixture: ComponentFixture<UserComponent>;
+describe('UserComponent', () => {
+  let component: UserComponent;
+  let fixture: ComponentFixture<UserComponent>;
+  let service: UserService;
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       imports: [
-//         CommonModule,
-//         RouterTestingModule.withRoutes([
-//           { path: '', redirectTo: '/list', pathMatch: 'full' },
-//           { path: 'user/:id', component: UserComponent }
-//         ])
-//       ],
-//       declarations: [ UserComponent ]
-//     })
-//     .compileComponents();
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UserComponent ],
+      imports: [ RouterTestingModule ],
+      providers: [ UserService ]
+    });
+    TestBed.overrideComponent(UserComponent, {
+      set: {
+        providers: [
+          { provide: UserService, useClass: MockUserService },
+          { provide: ActivatedRoute, useClass: MockActivatedRoute }
+        ]
+      }
+    });
+  }));
 
-//     TestBed.overrideComponent(UserComponent, {
-//       set: {
-//         providers: [
-//           { provide: UserService, useClass: MockUserService },
-//           { provide: ActivatedRoute, useClass: MockActivatedRoute }
-//         ]
-//       }
-//     });
-//   }));
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UserComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   // beforeEach(() => {
-//   //   fixture = TestBed.createComponent(UserComponent);
-//   //   component = fixture.componentInstance;
-//   //   fixture.detectChanges();
-//   // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-//   // it('should create', () => {
-//   //   expect(component).toBeTruthy();
-//   // });
-//   it('click on back and should go to list',
-//     async(inject([Router, Location], (router: Router, location: Location) => {
 
-//     let fixture = TestBed.createComponent(UserComponent);
-//     let component = fixture.componentInstance;
-//     fixture.detectChanges();
-
-//     expect(component.user.username).toEqual('test');
-
-//     fixture.debugElement.query(By.css('button')).nativeElement.click();
-//     fixture.whenStable().then(() => {
-//       expect(location.path()).toEqual('');
-//       console.log('after expect');
-//     });
-//   })));
-// });
+  it('should have user fields', () => {
+    expect(component.user.id).toEqual(42);
+    expect(component.user.name).toEqual('Test User');
+    expect(component.user.email).toEqual('test@email');
+    expect(component.user.website).toEqual('test web');
+    expect(component.user.phone).toEqual('123-456');
+  });
+});
