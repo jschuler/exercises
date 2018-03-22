@@ -1,0 +1,20 @@
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.displayName}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of users">
+      <td *ngFor="let col of columns; let i = index; trackBy: trackByFn">
+        <div *ngIf="col.field === 'name'"><button class="btn btn-outline-primary" routerLink="/user/{{row.id}}" [innerHTML]="row[col.field]"></button></div>
+
+        <div *ngIf="col.field === 'email'"><a href="mailto:{{row[col.field]}}" [innerHTML]="row[col.field]"></a></div>
+
+        <div *ngIf="col.field !== 'name' && col.field !== 'email'" [innerHTML]="row[col.field]"></div>
+      </td>
+    </tr>
+  </tbody>
+</table>

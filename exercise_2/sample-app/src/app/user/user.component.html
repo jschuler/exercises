@@ -1,0 +1,49 @@
+<button class="btn btn-primary" (click)="goBack()">Back</button>
+
+<div *ngIf="user" class="container-fluid">
+  <form>
+
+    <div class="form-group row">
+      <label for="staticId" class="col-sm-4 col-form-label">Id</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticId" value="{{user.id}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticUsername" class="col-sm-4 col-form-label">Username</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticUsername" value="{{user.username}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticName" class="col-sm-4 col-form-label">Name</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticName" value="{{user.name}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{user.email}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticPhone" class="col-sm-4 col-form-label">Phone</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticPhone" value="{{user.phone}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticWebsite" class="col-sm-4 col-form-label">Website</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticWebsite" value="{{user.website}}">
+      </div>
+    </div>
+
+  </form>
+</div>
